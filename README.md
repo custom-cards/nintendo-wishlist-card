@@ -12,7 +12,7 @@ Install
 
 1) Install the [Nintendo Wishlist Custom Component](https://github.com/custom-components/sensor.nintendo_wishlist).
 2) Copy the [nintendo-wishlist-card.js](https://raw.githubusercontent.com/custom-cards/nintendo-wishlist-card/master/nintendo-wishlist-card.js) into your `www/custom-lovelace` folder or install it
-   from the HACS (Home Assistant Community Store).
+   from the [HACS (Home Assistant Community Store)](https://custom-components.github.io/hacs/).
 3) Add the following to your `ui-lovelace.yaml` file under `resources`:
 
 ```yaml
