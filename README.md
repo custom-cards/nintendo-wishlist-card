@@ -1,7 +1,7 @@
 Nintendo Wishlist Card
 ======================
 
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) | [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 A card that displays Nintendo Switch games that are on sale from your wish list.
 
