@@ -7,7 +7,7 @@ A card that displays Nintendo Switch games that are on sale from your wish list.
 
 | Cover Art | Background Art
 | ---- | ----
-| <img src="https://github.com/custom-cards/nintendo-wishlist-card/raw/master/cover-art.png" alt="Cover Art" width="250"> | <img src="https://github.com/custom-cards/nintendo-wishlist-card/raw/master/background-art.png" alt="Background Art" width="250">
+| <img src="https://github.com/custom-cards/nintendo-wishlist-card/raw/master/cover-art.png" alt="Cover Art" width="300"> | <img src="https://github.com/custom-cards/nintendo-wishlist-card/raw/master/background-art.png" alt="Background Art" width="300">
 
 Install
 -------
@@ -35,6 +35,13 @@ cards:
 
 Configuration
 -------------
+
+|Name|Type|Default|Description|
+|-|-|-|-|
+|type|string|*Required*|`custom:nintendo-wishlist-card`|
+|entity|string|*Required*|The entity id of the nintendo-wishlist custom component.  e.g. `sensor.nintendo_wishlist`|
+|title|string||The title to display at the top of the card.|
+|image_style|string|boxart|The art style to display. Options are `boxart` or `backgroundart`.|
 
 Credits
 -------
