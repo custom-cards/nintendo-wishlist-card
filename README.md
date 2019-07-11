@@ -5,7 +5,11 @@ Nintendo Wishlist Card
 
 A card that displays Nintendo Switch games that are on sale from your wish list.
 
-![nintendo-wishlist-card-screenshot](https://github.com/custom-cards/nintendo-wishlist-card/raw/master/example.png)
+*Cover Art Option*
+![nintendo-wishlist-card-screenshot](https://github.com/custom-cards/nintendo-wishlist-card/raw/master/cover-art.png)
+
+*Background Art Option*
+![nintendo-wishlist-card-screenshot](https://github.com/custom-cards/nintendo-wishlist-card/raw/master/background-art.png)
 
 Install
 -------
@@ -28,10 +32,14 @@ cards:
   - type: custom:nintendo-wishlist-card
     entity: sensor.nintendo_wishlist
     title: Switch Wishlist
+    image_style: boxart
 ```
+
+Configuration
+-------------
 
 Credits
 -------
 
-Thanks to [@maykar](https://github.com/maykar) for inspiration for most of
-the layout and code.
+The code for this card is a minor modification of [@maykar](https://github.com/maykar)'s
+[upcoming-media-card](https://github.com/custom-cards/upcoming-media-card).
