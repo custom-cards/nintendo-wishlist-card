@@ -248,7 +248,7 @@ class NintendoWishlistCard extends HTMLElement {
                 <text>
                    <tspan class="switchwishlist_line0_${view}" x="15" dy="1.3em" y="-5">${truncate(title, 'large')}</tspan>
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                   <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">$${item('normal_price')}</tspan>  $${item('sale_price')} (${item('percent_off')}% off)</tspan>
+                   <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item('normal_price')}</tspan>  ${item('sale_price')} (${item('percent_off')}% off)</tspan>
                 </text>
              </svg>
           </div>
@@ -262,7 +262,7 @@ class NintendoWishlistCard extends HTMLElement {
                    <text>
                      ${line[0]}
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                      <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">$${item('normal_price')}</tspan>  $${item('sale_price')} (${item('percent_off')}% off)</tspan></text>
+                      <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item('normal_price')}</tspan>  ${item('sale_price')} (${item('percent_off')}% off)</tspan></text>
                 </svg>
              </div>
           </div>
