@@ -42,6 +42,7 @@ Configuration
 |entity|string|*Required*|The entity id of the nintendo-wishlist custom component.  e.g. `sensor.nintendo_wishlist`|
 |title|string||The title to display at the top of the card.|
 |image_style|string|boxart|The art style to display. Options are `boxart` or `backgroundart`.|
+|max|int|5|The maximum number of items to show in the card.|
 
 Credits
 -------
