@@ -1,16 +1,15 @@
 class NintendoWishlistCard extends HTMLElement {
-
   set hass(hass) {
     if (!this.content) {
-      const card = document.createElement('ha-card');
+      const card = document.createElement("ha-card");
       card.header = this.config.title;
-      this.content = document.createElement('div');
-      this.content.style.padding = '5px 10px';
+      this.content = document.createElement("div");
+      this.content.style.padding = "5px 10px";
       card.appendChild(this.content);
       this.appendChild(card);
     }
     // The Great Wall of Config & Defaults™
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     const entity = this.config.entity;
     if (!hass.states[entity]) {
       console.log("entity doesn't exist");
@@ -18,32 +17,64 @@ class NintendoWishlistCard extends HTMLElement {
     }
     const json = hass.states[entity].attributes.on_sale;
     if (!json || !json.length) {
-      return
+      return;
     }
-    const view = this.config.image_style || 'boxart';
-    const title_size = 'large';
-    const line1_size = 'medium';
-    const line2_size = 'small';
-    const line3_size = 'small';
-    const line4_size = 'small';
-    const tSize = (size) => size == 'large' ? '18' : size == 'medium' ? '14' : '12';
-    const size = [tSize(title_size), tSize(line1_size), tSize(line2_size), tSize(line3_size), tSize(line4_size)];
-    const defaultClr = (boxart, backgroundart) => view == 'boxart' ? boxart : backgroundart;
-    const title_color = defaultClr('var(--primary-text-color)', '#fff');
-    const line1_color = defaultClr('var(--primary-text-color)', '#fff');
-    const line2_color = defaultClr('var(--primary-text-color)', '#fff');
-    const line3_color = defaultClr('var(--primary-text-color)', '#fff');
-    const line4_color = defaultClr('var(--primary-text-color)', '#fff');
-    const accent = defaultClr('var(--primary-color)', '#000');
-    const border = defaultClr('#fff', '#000');
-    const shadows = (conf) => this.config.all_shadows == undefined ? conf == undefined ? true : conf : this.config.all_shadows;
-    const boxshdw = shadows(this.config.box_shadows) ? view == 'boxart' ? '5px 5px 10px' : '3px 2px 25px' : '';
-    const svgshdw = shadows(this.config.box_shadows) ? 'url(#grad1)' : accent;
-    const txtshdw = shadows(this.config.text_shadows) ? '1px 1px 3px' : '';
+    const view = this.config.image_style || "boxart";
+    const title_size = "large";
+    const line1_size = "medium";
+    const line2_size = "small";
+    const line3_size = "small";
+    const line4_size = "small";
+    const tSize = (size) =>
+      size == "large" ? "18" : size == "medium" ? "14" : "12";
+    const size = [
+      tSize(title_size),
+      tSize(line1_size),
+      tSize(line2_size),
+      tSize(line3_size),
+      tSize(line4_size),
+    ];
+    const defaultClr = (boxart, backgroundart) =>
+      view == "boxart" ? boxart : backgroundart;
+    const title_color =
+      this.config.title_color ||
+      defaultClr("var(--primary-text-color)", "#fff");
+    const line1_color =
+      this.config.line1_color ||
+      this.config.line_color ||
+      defaultClr("var(--primary-text-color)", "#fff");
+    const line2_color =
+      this.config.line2_color ||
+      this.config.line_color ||
+      defaultClr("var(--primary-text-color)", "#fff");
+    const line3_color =
+      this.config.line3_color ||
+      this.config.line_color ||
+      defaultClr("var(--primary-text-color)", "#fff");
+    const line4_color =
+      this.config.line4_color ||
+      this.config.line_color ||
+      defaultClr("var(--primary-text-color)", "#fff");
+    const accent =
+      this.config.accent_color || defaultClr("var(--primary-color)", "#000");
+    const border = this.config.border_color || defaultClr("#fff", "#000");
+    const shadows = (conf) =>
+      this.config.all_shadows == undefined
+        ? conf == undefined
+          ? true
+          : conf
+        : this.config.all_shadows;
+    const boxshdw = shadows(this.config.box_shadows)
+      ? view == "boxart"
+        ? "5px 5px 10px"
+        : "3px 2px 25px"
+      : "";
+    const svgshdw = shadows(this.config.box_shadows) ? "url(#grad1)" : accent;
+    const txtshdw = shadows(this.config.text_shadows) ? "1px 1px 3px" : "";
     const max = Math.min(json.length, this.config.max || 5);
     window.cardSize = max;
 
-    if (view == 'boxart') {
+    if (view == "boxart") {
       style.textContent = `
         .switchwishlist_${view} {
           width:100%;
@@ -160,18 +191,21 @@ class NintendoWishlistCard extends HTMLElement {
         }
       `;
     }
-    this.content.innerHTML = '';
+    this.content.innerHTML = "";
 
     // Truncate text...
     function truncate(text, chars) {
       // When to truncate depending on size
-      chars = chars == 'large' ? 23 : chars == 'medium' ? 28 : 35;
+      chars = chars == "large" ? 23 : chars == "medium" ? 28 : 35;
       // Remove parentheses & contents: "Shameless (US)" becomes "Shameless".
-      text = text.replace(/ *\([^)]*\) */g, ' ');
+      text = text.replace(/ *\([^)]*\) */g, " ");
       // Truncate only at whole word w/ no punctuation or space before ellipsis.
       if (text.length > chars) {
         for (let i = chars; i > 0; i--) {
-          if (text.charAt(i).match(/( |:|-|;|"|'|,)/) && text.charAt(i - 1).match(/[a-zA-Z0-9_]/)) {
+          if (
+            text.charAt(i).match(/( |:|-|;|"|'|,)/) &&
+            text.charAt(i - 1).match(/[a-zA-Z0-9_]/)
+          ) {
             var truncated = `${text.substring(0, i)}...`;
             return truncated;
           }
@@ -183,33 +217,33 @@ class NintendoWishlistCard extends HTMLElement {
 
     for (let count = 0; count < max; count++) {
       const item = (key) => json[count][key];
-      let image = item('box_art_url');
+      let image = item("box_art_url");
 
       // Shifting images for backgroundart view since we use boxart as fallback image.
-      let shiftimg = item('backgroundart') ?
-        'background-position:100% 0;' :
-        'background-size: 54% auto;background-position:100% 35%;';
+      let shiftimg = item("backgroundart")
+        ? "background-position:100% 0;"
+        : "background-size: 54% auto;background-position:100% 35%;";
 
       // First item in card needs no top margin.
-      if (count == '0') var top = '0px';
-      else view == 'boxart' ? '20px' : '10px';
+      if (count == "0") var top = "0px";
+      else view == "boxart" ? "20px" : "10px";
 
-      let line = ['title', 'sale_price'];
+      let line = ["title", "sale_price"];
       let char = [title_size, line1_size];
 
       // Keyword map for replacement, return null if empty so we can hide empty sections
       let keywords = /title|sale_price/g;
       let keys = {
-        title: item('title') || null,
-        sale_price: item('sale_price') || null
+        title: item("title") || null,
+        sale_price: item("sale_price") || null,
       };
-      let title = item('title');
+      let title = item("title");
 
       // Replace keywords in lines
       for (let i = 0; i < line.length; i++) {
-        line[i] = line[i].replace(' - ', '-');
+        line[i] = line[i].replace(" - ", "-");
         // Split at '-' so we can ignore entire contents if keyword returns null
-        let text = line[i].replace(keywords, (val) => keys[val]).split('-');
+        let text = line[i].replace(keywords, (val) => keys[val]).split("-");
         //let text = item('title').split('-');
         let filtered = [];
         // Rebuild lines, ignoring null
@@ -218,20 +252,31 @@ class NintendoWishlistCard extends HTMLElement {
           else filtered.push(text[t]);
         }
         // Replacing twice to get keywords in component generated strings
-        text = filtered.join(' - ').replace(keywords, (val) => keys[val]);
+        text = filtered.join(" - ").replace(keywords, (val) => keys[val]);
 
         // Shifting header text around depending on view & size
         let svgshift, y;
-        if (i == 0) size[i].match(/18/) ? y = '-5' : size[i].match(/14/) ? y = '-2' : y = '0';
-        if (view == 'backgroundart') svgshift = i == 0 ? `x="0" dy="1em" ` : `x="0" dy="1.3em" `;
-        else svgshift = i == 0 ? `x="15" y="${y}" dy="1.3em" ` : `x="15" dy="1.3em" `;
+        if (i == 0)
+          size[i].match(/18/)
+            ? (y = "-5")
+            : size[i].match(/14/)
+            ? (y = "-2")
+            : (y = "0");
+        if (view == "backgroundart")
+          svgshift = i == 0 ? `x="0" dy="1em" ` : `x="0" dy="1.3em" `;
+        else
+          svgshift =
+            i == 0 ? `x="15" y="${y}" dy="1.3em" ` : `x="15" dy="1.3em" `;
 
         // Build lines HTML or empty line
-        line[i] = line[i].match('empty') ?
-          `<tspan class="switchwishlist_line${i}_${view}" style="fill:transparent;text-shadow:0 0 transparent;" ${svgshift}>.</tspan>` :
-          `<tspan class="switchwishlist_line${i}_${view}" ${svgshift}>${truncate(text,char[i])}</tspan>`;
+        line[i] = line[i].match("empty")
+          ? `<tspan class="switchwishlist_line${i}_${view}" style="fill:transparent;text-shadow:0 0 transparent;" ${svgshift}>.</tspan>`
+          : `<tspan class="switchwishlist_line${i}_${view}" ${svgshift}>${truncate(
+              text,
+              char[i]
+            )}</tspan>`;
       }
-      if (view == 'boxart') {
+      if (view == "boxart") {
         this.content.innerHTML += `
           <div id='main' class='switchwishlist_${view}' style='margin-top:${top};'>
              <div class="switchwishlist_container_${view}" style="background-image:url('${image}');">
@@ -246,9 +291,14 @@ class NintendoWishlistCard extends HTMLElement {
                 </defs>
                 <rect width="500px" height="23px" fill="${svgshdw}"/>
                 <text>
-                   <tspan class="switchwishlist_line0_${view}" x="15" dy="1.3em" y="-5">${truncate(title, 'large')}</tspan>
+                   <tspan class="switchwishlist_line0_${view}" x="15" dy="1.3em" y="-5">${truncate(
+          title,
+          "large"
+        )}</tspan>
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                   <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item('normal_price')}</tspan>  ${item('sale_price')} (${item('percent_off')}% off)</tspan>
+                   <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item(
+          "normal_price"
+        )}</tspan>  ${item("sale_price")} (${item("percent_off")}% off)</tspan>
                 </text>
              </svg>
           </div>
@@ -262,7 +312,11 @@ class NintendoWishlistCard extends HTMLElement {
                    <text>
                      ${line[0]}
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                      <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item('normal_price')}</tspan>  ${item('sale_price')} (${item('percent_off')}% off)</tspan></text>
+                      <tspan class="switchwishlist_line1_${view}" x="15" dy="1.3em"><tspan style="text-decoration:line-through">${item(
+          "normal_price"
+        )}</tspan>  ${item("sale_price")} (${item(
+          "percent_off"
+        )}% off)</tspan></text>
                 </svg>
              </div>
           </div>
@@ -272,12 +326,12 @@ class NintendoWishlistCard extends HTMLElement {
     }
   }
   setConfig(config) {
-    if (!config.entity) throw new Error('Define entity.');
+    if (!config.entity) throw new Error("Define entity.");
     this.config = config;
   }
   getCardSize() {
-    let view = this.config.image_style || 'boxart';
-    return view == 'boxart' ? window.cardSize * 5 : window.cardSize * 3;
+    let view = this.config.image_style || "boxart";
+    return view == "boxart" ? window.cardSize * 5 : window.cardSize * 3;
   }
 }
-customElements.define('nintendo-wishlist-card', NintendoWishlistCard);
+customElements.define("nintendo-wishlist-card", NintendoWishlistCard);
