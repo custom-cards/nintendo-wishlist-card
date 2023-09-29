@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.1.2 (2023-09-29)
+## v2.2.1 (2023-09-29)
 
 * Allow card to be somewhat configured from the UI. (note the preview won't update while modifying the config)
 
