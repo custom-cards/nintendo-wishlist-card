@@ -333,5 +333,29 @@ class NintendoWishlistCard extends HTMLElement {
     let view = this.config.image_style || "boxart";
     return view == "boxart" ? window.cardSize * 5 : window.cardSize * 3;
   }
+
+  configChanged(newConfig) {
+    const event = new Event("config-changed", {
+      bubbles: true,
+      composed: true,
+    });
+    event.detail = { config: newConfig };
+    this.dispatchEvent(event);
+  }
+
+  static getConfigElement() {
+    return document.createElement("nintendo-wishlist-card-editor");
+  }
+
+  static getStubConfig() {
+    return {entity: 'sensor.nintendo_wishlist', title: 'Switch Wishlist', image_style: 'backgroundart', max: 5}
+  }
 }
+
 customElements.define("nintendo-wishlist-card", NintendoWishlistCard);
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "nintendo-wishlist-card",
+  name: "Nintendo Wishlist Card",
+  description: "A card that displays Nintendo Switch games that are on sale from your wish list when using the nintendo-wishlist custom integration."
+})
