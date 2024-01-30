@@ -19,6 +19,13 @@ class NintendoWishlistCard extends HTMLElement {
     if (!json || !json.length) {
       return;
     }
+
+    const sortBy = this.config.sort_by
+    const sortDir = this.config.sort_dir ?? 'desc'
+    if (sortBy) {
+      json.sort((a, b) => sortDir === 'desc' ? b[sortBy] - a[sortBy] : a[sortBy] - b[sortBy])
+    }
+
     const view = this.config.image_style || "boxart";
     const title_size = "large";
     const line1_size = "medium";
